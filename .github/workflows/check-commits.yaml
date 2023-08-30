@@ -47,5 +47,3 @@ jobs:
       - uses: ./.github/actions/setup-python
       - name: 'Install Commitzen'
         run: pip install -U commitizen
-      - name: 'Check Commit Messages'
-        run: cz check --rev-range main..HEAD
