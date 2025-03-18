@@ -1,0 +1,21 @@
+pull_request_rules:
+  - name: Auto-approve mainnet-canister-revisions
+    conditions:
+      - author=cgundy
+      - files=mainnet-canister-revisions.json
+      - "#files=1"
+    actions:
+      review:
+        type: APPROVE
+        message: Auto-approving changes to mainnet-canister-revisions.json
+      label:
+        add:
+          - automerge-squash
+  - name: Automatic merge (squash)
+    conditions:
+      - "#approved-reviews-by>=1"
+      - "#changes-requested-reviews-by=0"
+      - base=main
+      - label=automerge-squash
+    actions:
+      merge:
