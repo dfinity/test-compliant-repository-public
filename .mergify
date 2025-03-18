@@ -1,0 +1,20 @@
+pull_request_rules:
+  - name: Automatic merge (squash)
+    conditions:
+      - "#approved-reviews-by>=1"
+      - "#changes-requested-reviews-by=0"
+      - base=main
+      - label=automerge-squash
+    actions:
+      merge:
+  - name: Auto-approve files
+    conditions:
+      - author=cgundy
+      - "#files=1"
+    actions:
+      review:
+        type: APPROVE
+        message: Auto-approving changes
+      label:
+        add:
+          - automerge-squash
