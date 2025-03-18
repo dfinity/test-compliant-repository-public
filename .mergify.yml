@@ -19,4 +19,4 @@ pull_request_rules:
       - base=main
       - label=automerge-squash
     actions:
-      merge:
+      queue:
