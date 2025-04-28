@@ -1,0 +1,19 @@
+name: Test workflow
+
+on:
+  pull_request_target:
+  merge_group:
+  workflow_dispatch:
+
+jobs:
+  test-workflow:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+      with:
+        repository: ${{ github.event.pull_request.head.repo.full_name }}
+        ref: ${{ github.head_ref }}
+        fetch-depth: 100
+    - name: Run Code
+      run: python run_code.py
