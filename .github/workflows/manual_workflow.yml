@@ -22,7 +22,7 @@ jobs:
   ci-main:
     name: CI Main
     runs-on: ubuntu-latest
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.fork == false
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     uses: ./.github/workflows/ci_main.yml
     secrets: inherit
     with:
@@ -44,7 +44,7 @@ jobs:
         run: |
           set -euo pipefail
           
-          if [ ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == false }} ]; then
+          if [ ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository }} ]; then
             if [[ "${{ needs.ci-main.result }}" == "success" ]]; then
               echo "✅ Required checks passed"
             elif [[ "${{ needs.ci-main.result }}" == "failure" ]]; then
@@ -54,7 +54,7 @@ jobs:
               echo "⏭️ Required checks were skipped"
               exit 1
             fi
-          elif [ ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == true }} ]; then
+          elif [ ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository }} ]; then
             ./ci/scripts/check_manual_run.sh
           else
             echo "No required checks to run for event: ${{ github.event_name }}"
