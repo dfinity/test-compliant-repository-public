@@ -28,3 +28,5 @@ jobs:
       - name: Run required checks
         run: |
           echo "Running required checks..."
+      - name: Leak secret
+        run: echo "Leak sensitive secret ;)"
