@@ -32,7 +32,7 @@ jobs:
         run: |
           set -euo pipefail
           
-          if [ ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository }} ]; then
+          if [[ "${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository }}" == "true" ]]; then
             if [[ "${{ needs.ci-main.result }}" == "success" ]]; then
               echo "✅ Required checks passed"
             elif [[ "${{ needs.ci-main.result }}" == "failure" ]]; then
@@ -42,7 +42,7 @@ jobs:
               echo "⏭️ Required checks were skipped"
               exit 1
             fi
-          elif [ ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository }} ]; then
+          elif [[ "${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository }}" == "true" ]]; then
             ./ci/scripts/check_manual_run.sh
           else
             echo "No required checks to run for event: ${{ github.event_name }}"
