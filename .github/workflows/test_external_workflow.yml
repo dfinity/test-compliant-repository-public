@@ -1,4 +1,4 @@
-name: Test External Workflow
+name: WF Kickoff
 
 on:
   merge_group:
@@ -12,12 +12,10 @@ jobs:
     name: CI Main
     runs-on: ubuntu-latest
     if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.fork == false
-    env:
-      TEST: ${{ secrets.TEST }}
-    steps:
-      - name: Run CI Main
-        run: |
-          echo "Running CI Main"
+    uses: ./.github/workflows/ci_main.yml
+    secrets: inherit
+    with:
+      commit-sha: ${{ github.sha }}
 
   required-checks:
     name: Required Checks
