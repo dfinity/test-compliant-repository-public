@@ -12,6 +12,8 @@ jobs:
     name: CI Main
     runs-on: ubuntu-latest
     if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.fork == false
+    env:
+      TEST: ${{ secrets.TEST }}
     steps:
       - name: Run CI Main
         run: |
