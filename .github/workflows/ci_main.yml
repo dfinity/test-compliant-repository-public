@@ -42,14 +42,3 @@ jobs:
           for file in ${ALL_CHANGED_FILES}; do
             echo "$file was changed"
           done
-
-  test-workflow-3:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ inputs.commit-sha }}
-      - name: Test Workflow 3
-        run: |
-          echo "Test Workflow 3" 
-          echo "Running on commit: $(git rev-parse HEAD)"
