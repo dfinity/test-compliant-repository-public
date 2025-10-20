@@ -1,0 +1,5 @@
+# This is a list of files that cannot be changed by external contributors
+
+CODEOWNERS
+LICENSE
+.github/*
