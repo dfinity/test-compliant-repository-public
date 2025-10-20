@@ -50,6 +50,7 @@ jobs:
         with:
           ref: ${{ inputs.commit-sha }}
       - name: Test Workflow 3
+        uses: actions/github-script@v7
         run: |
           await github.rest.repos.createCommitStatus({
             owner: context.repo.owner,
@@ -60,4 +61,3 @@ jobs:
             description: description,
             context: 'ci/manual-run'
           });
-  
