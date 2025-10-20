@@ -24,7 +24,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.commit-sha }}
+          ref: ${{ github.sha }}
       - uses: ./.github/actions/post-commit-status
         with:
           commit-sha: ${{ github.sha }}
