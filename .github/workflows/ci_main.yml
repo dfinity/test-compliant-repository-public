@@ -57,8 +57,8 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               sha: '${{ inputs.commit-sha }}',
-              state: state,
+              state: 'success',
               target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
-              description: description,
+              description: 'description',
               context: 'ci/manual-run'
             });
