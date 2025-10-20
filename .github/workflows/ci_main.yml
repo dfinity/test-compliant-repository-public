@@ -25,6 +25,7 @@ jobs:
 
   test-changed-files:
     runs-on: ubuntu-latest
+    if: github.event_name != 'merge_group'
     steps:
       - uses: actions/checkout@v4
         with:
