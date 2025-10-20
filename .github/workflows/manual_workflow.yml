@@ -9,16 +9,6 @@ on:
         default: ''
 
 jobs:
-  validate-commit:
-    name: Validate Commit
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      - name: Validate commit SHA exists
-        run: |
-          git fetch origin ${{ inputs.commit-sha }} --depth=1
-
   ci-main:
     name: CI Main
     if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
