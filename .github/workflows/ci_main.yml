@@ -30,8 +30,10 @@ jobs:
         with:
           ref: ${{ inputs.commit-sha }}
       - name: Test file output
+        env:
+          CI_PROJECT_DIR: ${{ github.workspace }}
         run: |
-          cat test.txt
+          cat "${CI_PROJECT_DIR:-}"/test.txt
 
   test-changed-files:
     runs-on: ubuntu-latest
