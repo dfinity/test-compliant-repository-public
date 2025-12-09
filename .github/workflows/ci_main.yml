@@ -1,0 +1,57 @@
+name: CI Main
+
+on:
+  workflow_call:
+    inputs:
+      commit-sha:
+        description: The commit sha to run the CI on
+        required: true
+        type: string
+
+jobs:
+  test-workflow-secret:
+    runs-on: ubuntu-latest
+    env:
+      TEST: ${{ secrets.TEST }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.commit-sha }}
+      - name: Test Workflow Secret
+        run: |
+          echo "Test Workflow 1"
+          echo "Running on commit: $(git rev-parse HEAD)"
+          echo "Commit message: $(git log -1 --pretty=%B)"
+
+  test-read-files:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.commit-sha }}
+      - name: Test file output
+        env:
+          CI_PROJECT_DIR: ${{ github.workspace }}
+        run: |
+          cat "${CI_PROJECT_DIR:-}"/test.txt
+
+  test-changed-files:
+    runs-on: ubuntu-latest
+    if: github.event_name != 'merge_group'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.commit-sha }}
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@ed68ef82c095e0d48ec87eccea555d944a631a4c # v46.0.5
+        with:
+          base_sha: ${{ github.event.pull_request.base.sha || github.sha }}
+          sha: ${{ inputs.commit-sha }}
+      - name: List all changed files
+        env:
+          ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
+        run: |
+          for file in ${ALL_CHANGED_FILES}; do
+            echo "$file was changed"
+          done
